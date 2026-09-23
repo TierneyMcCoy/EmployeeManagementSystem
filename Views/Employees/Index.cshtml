@@ -1,10 +1,28 @@
-﻿@*
-    comments 
-    <h1>@Model.FirstName @Model.LastName </h1>
+﻿using EmployeeManagementSystem.Models;
+@model EmployeeManagementSystem.Models.Employee
 
+
+<p>First Name: @Model.FirstName</p>
+<p>Last Name: @Model.LastName</p>
+<p>Age: @Model.Age</p>
+
+
+
+
+
+
+@*
+
+    This depreciated code that displayed the 1st and last name
+     
+    <h1>@Model.FirstName @Model.LastName </h1
 *@
 
 
+@*
+    This is depricated code that pulled display eth 1st and last name     by puing the
+    GetFullName method
 
-@Model.GetFullName()
-<h1>Age: @Model.Age</h1>
+    @Model.GetFullName() 
+    <h1>First Namr: @Model.FirstName</h1>*@
+
