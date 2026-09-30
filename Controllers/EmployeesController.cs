@@ -27,6 +27,26 @@ namespace EmployeeManagementSystem.Controllers
             return View(employee);
         }
 
+        //This the get request that allows the user to enter info*
+        public IActionResult Create() { 
+            
+            return View();
+        
+        }
+
+        [HttpPost]
+        public IActionResult Create(Employee employee) 
+        {
+            if (!ModelState.IsValid) 
+            { 
+                return View(employee); 
+            }
+
+
+            // This code can me used to display the post values on screen
+            return Content($"Name: {employee.FirstName} {employee.LastName}, Age: {employee.Age}");
+           
+        }
 
     }
 }

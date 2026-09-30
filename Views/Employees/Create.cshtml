@@ -1,0 +1,28 @@
+﻿@*
+    This allows us to access the Properties in teh Employee model
+*@
+@model EmployeeManagementSystem.Models.Employee
+
+<h1>Create Employee</h1>
+@*
+    This is a container that will hold the user entries. 
+    The input values match the properties in the Employee model.
+    Post tells teh form to automatically submit to post
+*@
+
+<form method="post">
+
+    <label>First Name:</label>
+    <input type="text" name="FirstName" /> 
+    <span asp-validation-for="FirstName"></span>
+
+
+    <label>Last Name:</label>
+    <input type="text" name="LastName" />
+
+    <label>Age:</label>
+    <input type="number" name="Age" />
+
+    <button type="submit">Create Employees</button>
+
+</form>
