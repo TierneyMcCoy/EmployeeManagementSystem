@@ -1,41 +1,70 @@
-﻿using EmployeeManagementSystem.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Net.Cache;
+﻿
+using EmployeeManagementSystem.Data;
+using EmployeeManagementSystem.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeManagementSystem.Repositories
 {
     public class EmployeeRepository
     {
-        public Employee GetEmployee() {
+        private readonly EmployeeDbContext _context;
 
-            Employee employee = new Employee
+        public EmployeeRepository(EmployeeDbContext context)
+        {
+            _context = context;
+        }
+
+        // READ: Get one test employee (temporary)
+        public Employee GetEmployee()
+        {
+            return new Employee
             {
-
                 FirstName = "Test",
                 LastName = "Test",
                 Age = 31
-
-        };
-
-            return employee;
-
-
+            };
         }
+
+        // CREATE: Save an employee
+        public async Task AddEmployeeAsync(Employee employee)
+        {
+            _context.Employees.Add(employee);
+            await _context.SaveChangesAsync();
+        }
+
+        // READ: Get all employees from the database
+        public async Task<List<Employee>> GetAllEmployeesAsync()
+        {
+            return await _context.Employees.ToListAsync();
+        }
+
+        // UPDATE: Find one employee by ID
+        public async Task<Employee?> GetEmployeeByIdAsync(int id)
+        {
+            return await _context.Employees.FindAsync(id);
+        }
+
+        // UPDATE: Save changes to an employee
+        public async Task UpdateEmployeeAsync(Employee employee)
+        {
+            _context.Employees.Update(employee);
+            await _context.SaveChangesAsync();
+        }
+
+
+        // DELETE: Remove an employee from the database
+        public async Task DeleteEmployeeAsync(int id)
+        {
+            var employee = await _context.Employees.FindAsync(id);
+
+            if (employee != null)
+            {
+                _context.Employees.Remove(employee);
+                await _context.SaveChangesAsync();
+            }
+        }
+
 
     }
 }
 
-
-/*
- * This is depraciated code used to create an Employee object it was replaced with code that
- * uses object ijnitalizer
- 
- * employee = new Employee();
-
-   employee.FirstName = "Test Name";
-   employee.LastName = "Test Last";
-   employee.Age = 30;
-
-
-return employee;
-*/

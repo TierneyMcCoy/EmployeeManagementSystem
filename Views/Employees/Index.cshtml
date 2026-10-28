@@ -1,28 +1,39 @@
-﻿using EmployeeManagementSystem.Models;
-@model EmployeeManagementSystem.Models.Employee
+﻿@model List<EmployeeManagementSystem.Models.Employee>
+
+<h1>Employees</h1>
+
+<p>
+    <a asp-action="Create">Create New Employee</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Age</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <td>@employee.FirstName</td>
+                <td>@employee.LastName</td>
+                <td>@employee.Age</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@employee.Id">Edit</a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@employee.Id">Delete</a>
+                </td>
+             </tr>
+        }
+    </tbody>
+</table>
 
 
-<p>First Name: @Model.FirstName</p>
-<p>Last Name: @Model.LastName</p>
-<p>Age: @Model.Age</p>
 
 
-
-
-
-
-@*
-
-    This depreciated code that displayed the 1st and last name
-     
-    <h1>@Model.FirstName @Model.LastName </h1
-*@
-
-
-@*
-    This is depricated code that pulled display eth 1st and last name     by puing the
-    GetFullName method
-
-    @Model.GetFullName() 
-    <h1>First Namr: @Model.FirstName</h1>*@
 

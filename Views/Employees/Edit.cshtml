@@ -1,0 +1,55 @@
+﻿@model EmployeeManagementSystem.Models.Employee
+
+<h1>Edit Employee</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div>
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName" />
+    </div>
+
+    <div>
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" />
+    </div>
+
+    <div>
+        <label asp-for="Age"></label>
+        <input asp-for="Age" type="number" />
+    </div>
+
+    <div>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" />
+    </div>
+
+    <div>
+        <label asp-for="Department"></label>
+        <input asp-for="Department" />
+    </div>
+
+    <div>
+        <label asp-for="JobTitle"></label>
+        <input asp-for="JobTitle"  />
+    </div>
+
+
+
+
+    
+
+
+
+
+
+
+
+
+    <button type="submit">Save Changes</button>
+</form>
+
+<p>
+    <a asp-action="Index">Back to Employees</a>
+</p>

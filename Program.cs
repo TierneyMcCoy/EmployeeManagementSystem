@@ -1,4 +1,6 @@
 using EmployeeManagementSystem.Controllers;
+using EmployeeManagementSystem.Repositories;
+
 using Microsoft.EntityFrameworkCore;
 using EmployeeManagementSystem.Data;
 

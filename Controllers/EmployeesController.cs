@@ -1,51 +1,100 @@
-﻿using EmployeeManagementSystem.Models;
+﻿
+using EmployeeManagementSystem.Models;
+using EmployeeManagementSystem.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeManagementSystem.Controllers
 {
     public class EmployeesController : Controller
     {
-
         private readonly EmployeeRepository _repository;
 
-        public EmployeesController(EmployeeRepository repository) {
-
+        public EmployeesController(EmployeeRepository repository)
+        {
             _repository = repository;
-
-
         }
 
-        public IActionResult Index()
+        // READ: Display employees from the database
+        public async Task<IActionResult> Index()
         {
-           //
-           //Depriacted code 
-           //EmployeeRepository repository = new EmployeeRepository();
+            var employees = await _repository.GetAllEmployeesAsync();
+            return View(employees);
+        }
+
+        // GET: Display the empty form
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Save the submitted employee
+        [HttpPost]
+        public async Task<IActionResult> Create(Employee employee)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(employee);
+            }
+
+            await _repository.AddEmployeeAsync(employee);
+
+            return RedirectToAction(nameof(Index));
+        }
 
 
-            Employee employee = _repository.GetEmployee();
+        // GET: Display the Edit form
+        public async Task<IActionResult> Edit(int id)
+        {
+            var employee = await _repository.GetEmployeeByIdAsync(id);
+
+            if (employee == null)
+            {
+                return NotFound();
+            }
 
             return View(employee);
         }
 
-        //This the get request that allows the user to enter info*
-        public IActionResult Create() { 
-            
-            return View();
-        
-        }
-
+        // POST: Save the edited employee
         [HttpPost]
-        public IActionResult Create(Employee employee) 
+        public async Task<IActionResult> Edit(int id, Employee employee)
         {
-            if (!ModelState.IsValid) 
-            { 
-                return View(employee); 
+            if (id != employee.Id)
+            {
+                return NotFound();
             }
 
+            if (!ModelState.IsValid)
+            {
+                return View(employee);
+            }
 
-            // This code can me used to display the post values on screen
-            return Content($"Name: {employee.FirstName} {employee.LastName}, Age: {employee.Age}");
-           
+            await _repository.UpdateEmployeeAsync(employee);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        // GET: Show the employee before deleting
+        public async Task<IActionResult> Delete(int id)
+        {
+            var employee = await _repository.GetEmployeeByIdAsync(id);
+
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            return View(employee);
+        }
+
+        // POST: Confirm and perform deletion
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await _repository.DeleteEmployeeAsync(id);
+
+            return RedirectToAction(nameof(Index));
         }
 
     }
